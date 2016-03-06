@@ -39,6 +39,8 @@ class Samples():
             for (x, y, window) in self.sliding_window(resized, stepSize=16):
                 if window.shape[0] != winH or window.shape[1] != winW:
                     continue
-                print(save_path + str(i) + '.png')
-                ms.imsave(save_path + str(i) + '.png', window)
+                s = str(i)
+                s = s.zfill(8)
+                print(save_path + s + '.png')
+                ms.imsave(save_path + s + '.png', window)
                 i += 1
