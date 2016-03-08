@@ -1,3 +1,3 @@
 from Helper import Helper
 
-Helper.load_data("./Labels/HE_label/", "./Labels/labels.csv")
+Helper.load_data("/scratch/basag/HE_label/", "/scratch/basag/labels.csv")
