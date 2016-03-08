@@ -1,16 +1,15 @@
 import numpy as np
 import os
 from PIL import Image
+from keras import models
 
 class Helper():
     @staticmethod
-    def load_data(train_name, label_name):
+    def load_data(train_name):
         imgs = os.listdir(train_name)
         num = len(imgs)
 
         data = np.empty((num - 1,3,64,64),dtype="float32")
-        label = np.empty((num - 1,),dtype ="uint8")
-        label = np.genfromtxt(label_name,delimiter=',')
         j=0
         for i in range(num):
             if not imgs[i].startswith('.'):
@@ -18,4 +17,39 @@ class Helper():
                 arr = np.asarray (img, dtype ="float32")
                 data [j,:,:,:] = [arr[:,:,0],arr[:,:, 1],arr[:,:, 2]]
                 j=j+1
-        return data, label
+        return data
+
+    @staticmethod
+    def load_labels(label_name):
+        label = np.genfromtxt(label_name,delimiter=',')
+        return label
+
+
+    @staticmethod
+    def save_model(model, name):
+        json_string = model.to_json()
+        open(name + '.json', 'w').write(json_string)
+        model.save_weights(name + '_weights.h5')
+
+    @staticmethod
+    def load_model(name):
+        model = models.model_from_json(open(name + '.json').read())
+        model.load_weights(name + '_weights.h5')
+        return model
+
+    @staticmethod
+    def pop_layers_from_model(model, n):
+        poppedLayers = []
+        for j in range(n):
+            poppedLayers.append(model.layers.pop())
+
+        return [model, poppedLayers]
+
+    @staticmethod
+    def append_layers(model, layers):
+        n = len(layers)
+        layers.reverse()
+        for j in range(n):
+            model.layers.append(layers[j])
+
+        return model
