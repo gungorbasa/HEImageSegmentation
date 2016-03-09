@@ -13,7 +13,7 @@ test_y = np.zeros(shape=(50000,1))
 l = []
 
 for i in xrange(50000):
-    r = random.randint(0, num_imgs)
+    r = random.randint(0, num_imgs - 1)
     while r in l:
         r = random.randint(0, num_imgs)
     l.append(r)
@@ -21,7 +21,9 @@ for i in xrange(50000):
     f = f.zfill(8)
     shutil.move(path + "original/HE_label/" + f + ".png", path + "test_data/" + f + ".png")
     test_y[i] = y[r]
-    np.delete(y, r)
+    #y = np.delete(y, r)
+
+y = np.delete(y, l)
 
 np.savetxt("/scratch/basag/train_labels.csv", y, delimiter=",")
 np.savetxt("/scratch/basag/test_labels.csv", test_y, delimiter=",")

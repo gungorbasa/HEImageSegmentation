@@ -1,5 +1,4 @@
 from Helper import Helper
-from __future__ import print_function
 from keras.datasets import cifar10
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
@@ -7,19 +6,20 @@ from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, AveragePooling2D
 from keras.optimizers import SGD
 from keras.utils import np_utils
+import numpy as np
 
 batch_size = 100
 nb_classes = 2
 nb_epoch = 80
-data_augmentation = True
+data_augmentation = False
 
 # input image dimensions
 img_rows, img_cols = 64, 64
 img_channels = 3
 
 
-train_path = "/scratch/basag/train_data"
-test_path = "/scratch/basag/test_data"
+train_path = "/scratch/basag/train_data/"
+test_path = "/scratch/basag/test_data/"
 train_labels_path = "/scratch/basag/train_labels.csv"
 test_labels_path = "/scratch/basag/test_labels.csv"
 
@@ -29,8 +29,14 @@ X_train, Y_train, X_test, Y_test = Helper.load_data(train_path, train_labels_pat
 Y_train = np_utils.to_categorical(Y_train, nb_classes)
 Y_test = np_utils.to_categorical(Y_test, nb_classes)
 
+#print(np.shape(X_train))
+#print(len(Y_train))
+#print(np.shape(X_test))
+#print(len(Y_test))
+
+
 model = Sequential()
-# model.add(AveragePooling2D(pool_size=(2,2), input_shape=(img_channels, img_rows, img_cols)))
+model.add(AveragePooling2D(pool_size=(2,2), input_shape=(img_channels, img_rows, img_cols)))
 model.add(Convolution2D(32, 3, 3, border_mode='same', activation='relu'))
 model.add(Convolution2D(32, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))

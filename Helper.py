@@ -4,17 +4,22 @@ from PIL import Image
 from keras import models
 
 class Helper():
+    @staticmethod
     def _load_data(path):
-        imgs = os.listdir(train_name)
+        imgs = os.listdir(path)
         num = len(imgs)
+	#print("Number of Images: " + str(num))
         data = np.empty((num - 1,3,64,64),dtype="float32")
+	#print(np.shape(data))
         j=0
         for i in range(num):
             if not imgs[i].startswith('.'):
-                img = Image.open(train_name+imgs[i])
+                img = Image.open(path + imgs[i])
                 arr = np.asarray (img, dtype ="float32")
                 data [j,:,:,:] = [arr[:,:,0],arr[:,:, 1],arr[:,:, 2]]
                 j=j+1
+	#print(j)
+	#print("Loaded")
         return data
 
     @staticmethod
