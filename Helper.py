@@ -18,7 +18,7 @@ class Helper():
         return data
 
     @staticmethod
-    def load_data(train_name,test_name, train_label_path, test_label_path):
+    def load_data(train_name, train_label_path, test_name, test_label_path):
         train_data = Helper._load_data(train_name)
         test_data = Helper._load_data(test_name)
         train_label = Helper.load_labels(train_label_path)
