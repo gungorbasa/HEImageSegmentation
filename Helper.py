@@ -4,11 +4,9 @@ from PIL import Image
 from keras import models
 
 class Helper():
-    @staticmethod
-    def load_data(train_name):
+    def _load_data(path):
         imgs = os.listdir(train_name)
         num = len(imgs)
-
         data = np.empty((num - 1,3,64,64),dtype="float32")
         j=0
         for i in range(num):
@@ -18,6 +16,16 @@ class Helper():
                 data [j,:,:,:] = [arr[:,:,0],arr[:,:, 1],arr[:,:, 2]]
                 j=j+1
         return data
+
+    @staticmethod
+    def load_data(train_name,test_name, train_label_path, test_label_path):
+        train_data = Helper._load_data(train_name)
+        test_data = Helper._load_data(test_name)
+        train_label = Helper.load_labels(train_label_path)
+        test_label = Helper.load_labels(test_label_path)
+
+        return train_data, train_label, test_data, test_label
+
 
     @staticmethod
     def load_labels(label_name):
