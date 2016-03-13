@@ -12,7 +12,7 @@ def grab_files(directory):
         elif os.path.isfile(full_path):
             yield full_path
 
-path = 'Labels/Train/Nuclei_label'
+path = './pure_sliding'
 files = grab_files(path)
 num_files = sum(os.path.isfile(os.path.join(path, f)) for f in os.listdir(path))
 # num_files -= 1
@@ -30,4 +30,4 @@ for f in files:
         y[j] = 1
     j += 1
 
-np.savetxt("./Labels/train_labels.csv", y, delimiter=",")
+np.savetxt("./pure_sliding/test_pure_sliding_labels.csv", y, delimiter=",")

@@ -18,7 +18,7 @@ he_train = he_label[2000:, :]
 cv2.imwrite("he_test.png", he_test)
 cv2.imwrite("he_train.png", he_train)
 
-
+#
 nuc_train = Samples('./nuclei_train.png', height, width)
 nuc_train.pyramid_sliding_window('./Labels/Train/Nuclei_label/', 1000, 1000)
 #
@@ -32,3 +32,5 @@ nuc_train.pyramid_sliding_window('./Labels/Test/Nuclei_label/', 1000, 1000)
 #
 he_train = Samples('./he_test.png', height, width)
 he_train.pyramid_sliding_window('./Labels/Test/HE_label/', 1000, 1000)
+# s = Samples('nuclei_test.png', 64, 64)
+# s.save_sliding_images('pure_sliding/', 64)

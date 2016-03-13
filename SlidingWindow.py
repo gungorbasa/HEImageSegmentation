@@ -14,11 +14,7 @@ class Samples():
         self.win_height = height
 
 
-    def sliding_window(self, image, stepSize):
-        windowSize = [self.win_height, self.win_height]
-        for y in xrange(0, image.shape[0], stepSize):
-            for x in xrange(0, image.shape[1], stepSize):
-                yield (x, y, image[y:y + windowSize[1], x:x + windowSize[0]])
+
 
     def pyramid(self, image, scale, smallest_height, smallest_width):
         for (i, resized) in enumerate(pyramid_gaussian(image, downscale=scale)):
@@ -26,6 +22,12 @@ class Samples():
             if resized.shape[0] < smallest_height or resized.shape[1] < smallest_width:
                 break
             yield(resized)
+
+    def sliding_window(self, image, stepSize):
+        windowSize = [self.win_height, self.win_height]
+        for y in xrange(0, image.shape[0], stepSize):
+            for x in xrange(0, image.shape[1], stepSize):
+                yield (x, y, image[y:y + windowSize[1], x:x + windowSize[0]])
 
     # save_path = /Labels/HE_label/ or /Labels/Nuclei_label
     def pyramid_sliding_window(self, save_path, smallest_image_h, smallest_image_w):
@@ -44,3 +46,13 @@ class Samples():
                 print(save_path + s + '.png')
                 ms.imsave(save_path + s + '.png', window)
                 i += 1
+
+
+    def save_sliding_images(self, save_path, step_size):
+        i = 0
+        for (x, y, window) in self.sliding_window(self.image, stepSize=step_size):
+            s = str(i)
+            s = s.zfill(8)
+            print(save_path + s + '.png')
+            ms.imsave(save_path + s + '.png', window)
+            i += 1
