@@ -18,10 +18,10 @@ img_rows, img_cols = 64, 64
 img_channels = 3
 
 
-train_path = "/scratch/basag/train_data/"
-test_path = "/scratch/basag/test_data/"
-train_labels_path = "/scratch/basag/train_labels.csv"
-test_labels_path = "/scratch/basag/test_labels.csv"
+train_path = "/scratch/basag/New_Labels/Train/HE_label/"
+test_path = "/scratch/basag/New_Labels/Test/HE_label/"
+train_labels_path = "/scratch/basag/New_Labels/train_labels.csv"
+test_labels_path = "/scratch/basag/New_Labels/test_labels.csv"
 
 X_train, Y_train, X_test, Y_test = Helper.load_data(train_path, train_labels_path, test_path, test_labels_path)
 

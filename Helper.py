@@ -9,7 +9,7 @@ class Helper():
         imgs = os.listdir(path)
         num = len(imgs)
 	#print("Number of Images: " + str(num))
-        data = np.empty((num - 1,3,64,64),dtype="float32")
+        data = np.empty((num,3,64,64),dtype="float32")
 	#print(np.shape(data))
         j=0
         for i in range(num):

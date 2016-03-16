@@ -27,8 +27,8 @@ test_labels_path = "/scratch/basag/test_labels.csv"
 X_train, Y_train, X_test, Y_test = Helper.load_data(train_path, train_labels_path, test_path, test_labels_path)
 
 # convert class vectors to binary class matrices
-Y_train = np_utils.to_categorical(Y_train, nb_classes)
-Y_test = np_utils.to_categorical(Y_test, nb_classes)
+#Y_train = np_utils.to_categorical(Y_train, nb_classes)
+#Y_test = np_utils.to_categorical(Y_test, nb_classes)
 
 #print(np.shape(X_train))
 #print(len(Y_train))
@@ -37,8 +37,8 @@ Y_test = np_utils.to_categorical(Y_test, nb_classes)
 
 
 model = Graph()
-model.input(shape=(img_channels, img_rows, img_cols), name='input')
-model.node(Convolution2D(32, 7, 7), name='conv11', input='input', activation='relu')
+model.input(shape=(img_channels, img_rows, img_cols), name='input1')
+model.node(Convolution2D(32, 7, 7), name='conv11', input='input1', activation='relu')
 model.node(Convolution2D(32, 3, 3), name='conv12', input='conv11', activation='relu')
 model.node(MaxPooling2D(poolsize=(2, 2)), name='pool1', input='conv12')
 
@@ -57,5 +57,9 @@ X_train /= 255
 X_test /= 255
 
 
-model.compile(loss={'conv31':'mae', 'conv32':'mse', 'conv33': 'mse'}, loss_merge='sum', optimizer='sgd')
-model.fit(train={'input':X_train, 'output1':Y1})
+sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+
+model.output(inputs=['conv31', 'conv32', 'conv33'], name='output1', merge_mode='concat')
+
+model.compile(loss_merge='sum', optimizer='sgd')
+model.fit(train={'input1':X_train, 'output1':Y_train})
